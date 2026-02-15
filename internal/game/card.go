@@ -2,12 +2,12 @@ package game
 
 type Card struct {
 	Name              string
-	price             int
+	price             float64
 	quantity          int
 	availableQuantity int
 }
 
-func NewCard(name string, price, quantity, availabelQuantity int) *Card {
+func NewCard(name string, price float64, quantity, availabelQuantity int) *Card {
 	return &Card{
 		Name:              name,
 		price:             price,
@@ -16,8 +16,8 @@ func NewCard(name string, price, quantity, availabelQuantity int) *Card {
 	}
 }
 
-// updaters
-func (c *Card) UpdatePrice(price int) bool {
+// setters
+func (c *Card) UpdatePrice(price float64) bool {
 	c.price = price
 	return true
 }
@@ -47,7 +47,7 @@ func (c *Card) IncreaseAvailableQuantity(amount int) bool {
 }
 
 // getters
-func (c *Card) Price() int {
+func (c *Card) Price() float64 {
 	return c.price
 }
 
