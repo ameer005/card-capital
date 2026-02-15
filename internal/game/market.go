@@ -34,6 +34,8 @@ func (m *Market) purchase(playerId, cardId string, quantity int) bool {
 
 	player.AddCard(cardId, quantity)
 
+	card.UpdatePrice(card.Price() + priceDeltaFromTrade(card.Price(), quantity, 100))
+
 	return true
 }
 
@@ -47,20 +49,25 @@ func (m *Market) sell(playerId, cardId string, quantity int) bool {
 
 	cost := float64(quantity) * card.Price()
 
+	if !card.IncreaseAvailableQuantity(quantity) {
+		return false
+	}
+
 	if !player.RemoveCard(cardId, quantity) {
 		return false
 	}
 
-	if !card.IncreaseAvailableQuantity(quantity) {
-		player.AddCard(cardId, quantity)
-		return false
-	}
-
 	player.Credit(cost)
+
+	card.UpdatePrice(card.Price() - priceDeltaFromTrade(card.Price(), quantity, 100))
 
 	return true
 }
 
 func (m *Market) card(cardId string) *Card {
 	return m.Cards[cardId]
+}
+
+func priceDeltaFromTrade(price float64, qty, divider int) float64 {
+	return price * (float64(qty) / float64(divider))
 }
