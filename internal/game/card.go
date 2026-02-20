@@ -1,18 +1,20 @@
 package game
 
 type Card struct {
+	Id                string
 	Name              string
 	price             float64
 	quantity          int
 	availableQuantity int
 }
 
-func NewCard(name string, price float64, quantity, availabelQuantity int) *Card {
+func NewCard(name string, price float64, quantity int, id string) *Card {
 	return &Card{
+		Id:                id,
 		Name:              name,
 		price:             price,
 		quantity:          quantity,
-		availableQuantity: availabelQuantity,
+		availableQuantity: quantity,
 	}
 }
 

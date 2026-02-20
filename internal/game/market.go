@@ -13,6 +13,10 @@ func NewMarket() *Market {
 }
 
 func (m *Market) purchase(playerId, cardId string, quantity int) bool {
+	if quantity < 0 {
+		return false
+	}
+
 	card := m.Cards[cardId]
 	player := m.Players[playerId]
 
@@ -64,8 +68,30 @@ func (m *Market) sell(playerId, cardId string, quantity int) bool {
 	return true
 }
 
-func (m *Market) card(cardId string) *Card {
+func (m *Market) Card(cardId string) *Card {
 	return m.Cards[cardId]
+}
+
+func (m *Market) AddCard(card *Card) bool {
+
+	if _, ok := m.Cards[card.Id]; ok {
+		return false
+	}
+
+	m.Cards[card.Id] = card
+
+	return true
+
+}
+
+func (m *Market) AddPlayer(player *Player) bool {
+	if _, ok := m.Players[player.Id]; ok {
+		return false
+	}
+
+	m.Players[player.Id] = player
+
+	return true
 }
 
 func priceDeltaFromTrade(price float64, qty, divider int) float64 {

@@ -10,12 +10,12 @@ type Player struct {
 	money     float64
 }
 
-func NewPlayer(id string) *Player {
+func NewPlayer(id string, money float64) *Player {
 
 	return &Player{
 		Id:        id,
 		portfolio: make(map[string]*PortfolioCard),
-		money:     0,
+		money:     money,
 	}
 }
 
