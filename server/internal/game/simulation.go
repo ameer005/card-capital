@@ -36,11 +36,11 @@ func (s *Simulation) PlayerAction(p *Player) {
 }
 
 func (s *Simulation) Run() {
+	s.printStats(-1)
 	for i := 0; i < s.tick; i++ {
 		for _, player := range s.market.Players {
 			s.PlayerAction(player)
 		}
-
 		if (i+1)%100 == 0 {
 			s.printStats(i + 1)
 		}
@@ -59,6 +59,11 @@ func (s *Simulation) printStats(tick int) {
 	)
 
 	for _, player := range s.market.Players {
-		fmt.Printf("player: %s, money: %f\n", player.Id, player.money)
+		playerCard, err := player.getCard("1")
+		if err != nil {
+			continue
+		}
+
+		fmt.Printf("player: %s, money: %f, holding: %d\n", player.Id, player.money, playerCard.quantity)
 	}
 }

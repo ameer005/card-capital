@@ -18,7 +18,6 @@ func NewCard(name string, price float64, quantity int, id string) *Card {
 	}
 }
 
-// setters
 func (c *Card) UpdatePrice(price float64) bool {
 	c.price = price
 	return true

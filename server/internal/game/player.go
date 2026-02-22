@@ -1,5 +1,7 @@
 package game
 
+import "fmt"
+
 type PortfolioCard struct {
 	quantity int
 }
@@ -62,4 +64,12 @@ func (p *Player) RemoveCard(cardId string, qty int) bool {
 	}
 
 	return true
+}
+
+func (p *Player) getCard(cardId string) (*PortfolioCard, error) {
+	if portfolioCard, ok := p.portfolio[cardId]; !ok {
+		return portfolioCard, fmt.Errorf("No card found")
+	} else {
+		return portfolioCard, nil
+	}
 }
